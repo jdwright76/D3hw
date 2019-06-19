@@ -34,7 +34,7 @@ d3.csv("assets/data/data.csv")
         // Step 2: Create scale functions
         // ==============================
         var xLinearScale = d3.scaleLinear()
-            .domain([20, d3.max(journdata, d => d.healthcare)])
+            .domain([0, d3.max(journdata, d => d.healthcare)])
             .range([0, width]);
 
         var yLinearScale = d3.scaleLinear()
@@ -103,5 +103,22 @@ d3.csv("assets/data/data.csv")
             .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
             .attr("class", "axisText")
             .text("Poverty");
+
+
+        chartGroup.selectAll("text")
+            .data(journdata)
+            .enter()
+            .append("text")
+            .attr("x", function(d, index) {
+                return xLinearScale(d.healthcare - 0);
+            })
+            .attr("y", function(d, index) {
+                return yLinearScale(d.poverty - 0);
+            })
+            .text(function(d) {
+                return d.abbr;
+            })
+
+
     });
 // @TODO: YOUR CODE HERE!
